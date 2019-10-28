@@ -1,8 +1,20 @@
 <template>
   <div>
+    <Navigation />
     <nuxt />
   </div>
 </template>
+
+<script>
+import Navigation from '~/components/Navigation.vue';
+
+export default {
+  components: {
+    Navigation
+  }
+}
+</script>
+
 
 <style>
 html, body {
@@ -16,6 +28,7 @@ html, body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 .el-container.outer {
