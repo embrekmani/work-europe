@@ -8,7 +8,7 @@
             <a class="link" @mouseenter="canOpen = false" @mouseleave="canOpen = true" target="__blank" :href="applicationLink"><el-button type="text">Apply</el-button></a>
         </div>
         <div class="card-body">
-            <!--<div v-html="compiledMarkdown"></div>-->
+            <div v-html="compiledMarkdown"></div>
         </div>
     </el-card>
 </template>
@@ -80,6 +80,9 @@ export default {
 }
 
 .job {
+    .el-card__header {
+        border-bottom: none;
+    }
     .el-card__body {
         padding-top: 0;
         padding-bottom: 0;
@@ -100,6 +103,9 @@ export default {
         }
     }
     &.open {
+        .el-card__header {
+            border-bottom: 1px solid #EBEEF5;
+        }
         .el-card__body {
             padding: 0 20px 0 20px;
             transform: scaleY(1);
@@ -107,6 +113,7 @@ export default {
                 transform: scaleY(1);
                 font-size: inherit;
                 opacity: 1;
+                height: auto;
                 span {
                     opacity: 1;
                 }

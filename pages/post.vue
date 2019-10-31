@@ -65,22 +65,22 @@ export default {
     checkForm() {
       this.errors = [];
 
-      if (this.title == '' || this.location == '' || this.company == '' || this.applicationLink == '' || this.languages.length == 0 || this.description == '') {
+      if (this.form.title == '' || this.form.location == '' || this.form.company == '' || this.form.applicationLink == '' || this.form.languages.length == 0 || this.form.description == '') {
         this.errors.push('All fields required.')
       }
-      else if (this.title.length > 140) {
+      else if (this.form.title.length > 140) {
         this.errors.push('Title cannot exceed 140 characters.')
       }
-      else if (this.location.length > 140) {
+      else if (this.form.location.length > 140) {
         this.errors.push('Location cannot exceed 140 characters.')
       }
-      else if (this.company.length > 140) {
+      else if (this.form.company.length > 140) {
         this.errors.push('Company name cannot exceed 140 characters.')
       }
-      else if (this.applicationLink.length > 1000) {
+      else if (this.form.applicationLink.length > 1000) {
         this.errors.push('Application link cannot exceed 140 characters.')
       }
-      else if (this.description.length > 1000) {
+      else if (this.form.description.length > 1000) {
         this.errors.push('Description cannot exceed 1000 characters.')
       }
       else {

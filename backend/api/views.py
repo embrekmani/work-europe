@@ -7,7 +7,7 @@ from jobs.models import Job
 @api_view(['GET', 'POST'])
 def job_list(request, format=None):
     if request.method == 'GET':
-        jobs = Job.objects.all()
+        jobs = Job.objects.all().order_by('-date_created')
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
 

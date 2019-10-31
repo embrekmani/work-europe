@@ -1,7 +1,7 @@
 {
   "name": "work-europe",
   "version": "1.0.0",
-  "description": "Job board",
+  "description": "Europe's job board",
   "author": "Embrek",
   "private": true,
   "scripts": {

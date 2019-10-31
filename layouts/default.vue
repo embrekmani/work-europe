@@ -11,6 +11,14 @@ import Navigation from '~/components/Navigation.vue';
 export default {
   components: {
     Navigation
+  },
+  head() {
+    return {
+      title: 'Work Europe',
+      meta: [
+        { hid: 'description', name: 'description', content: 'The job board for location agnostic EU workers.' }
+      ]
+    }
   }
 }
 </script>

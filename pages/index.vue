@@ -3,7 +3,9 @@
   <el-container class="outer">
     <el-aside width="400px">
       <h1>Find your place in Europe.</h1>
-      <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida mi sem, at aliquet neque interdum nec. Duis convallis semper cursus. Vestibulum efficitur lorem erat. Cras sed dui vel mi rhoncus vestibulum sed eget urna. Nullam sapien metus, rhoncus in nunc quis, imperdiet sagittis risus.</p>
+      <p>Work Europe is the job board for location agnostic EU tech workers. Just filter by your preferred language(s) and enjoy the freedom Europe has to offer!</p>
+      <p>Made by Embrek Máni with ❤️</p>
+      <p>Contact: <a href="mailto:embrekmani@gmail.com">embrekmani@gmail.com</a></p>
     </el-aside>
 
     <el-main>
@@ -29,11 +31,14 @@
           :value="language">
         </el-option>
       </el-select>
-      <el-input placeholder="Search..." @enter="applyFilters" v-model="search" />
+      <el-input placeholder="Search..." v-on:keyup.enter="applyFilters" v-model="search" />
       <el-button @click="applyFilters" type="primary">Apply</el-button>
     </div>
-    <div class="jobs">
+    <div v-if="filteredJobs.length != 0" class="jobs">
       <Job v-for="job in filteredJobs" :key="job.id" :title="job.title" applicationLink="/apply" :company="job.company" :location="job.location" :languages="job.languages" :description="job.description" />
+    </div>
+    <div v-else class="no-jobs">
+      <p>Sorry, no jobs found.</p>
     </div>
   </el-container>
 </div>
@@ -51,7 +56,6 @@ export default {
     return {
       jobs: [],
       filteredJobs: [],
-      languages: ['English', 'French', 'German'],
       selectedLanguages: [],
       search: '',
       images: ['benjamin-davies-Oja2ty_9ZLM-unsplash.jpg', 'chris-karidis-nnzkZNYWHaU-unsplash.jpg', 'stefan-widua-iPOZf3tQfHA-unsplash.jpg']
@@ -61,7 +65,8 @@ export default {
     getImageUrl(url) {
       return require('../static/' + url)
     },
-    applyFilters() {
+    applyFilters(e) {
+      e.preventDefault();
       let jobs = [];
       // if selected any languages, search after filter
       // else search
@@ -89,8 +94,6 @@ export default {
       }
     },
     searchJobs(jobs) {
-      // TODO: add results with words containing terms e.g. 'dev' in developer
-      // BUG: when searching developer, one item (id: 3) comes up twice (expected once)
       let result = [];
       jobs.forEach(job => {
         let search = this.search.toUpperCase().split(' ');
@@ -151,8 +154,6 @@ export default {
 .jobs {
   padding: 1rem;
   width: 100%;
-  display: flex;
-  flex-direction: column-reverse;
   .job {
     margin-bottom: 1rem;
     .link {
@@ -166,6 +167,13 @@ export default {
       }
     }
   }
+}
+.no-jobs {
+  color: #606266;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 769px) { 
