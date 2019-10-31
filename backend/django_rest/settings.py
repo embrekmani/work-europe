@@ -21,10 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^b&do+3!)nxvmgr&ca%*^8%a0+xkss8u52mwzr0rp3bw8t*nh@'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '^b&do+3!)nxvmgr&ca%*^8%a0+xkss8u52mwzr0rp3bw8t*nh@')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -47,7 +46,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -83,7 +81,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'g00gOgoplex0123',
         'HOST': 'db',
         'PORT': 5432
     }
@@ -112,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-gb'
 
 TIME_ZONE = 'UTC'
 
@@ -161,6 +158,7 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
     'access-control-allow-origin'
 ]
+
 # DRF
 
 REST_FRAMEWORK = {
@@ -168,3 +166,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     )
 }
+
+SECURE_BROWSER_XSS_FILTER = os.environ.get('DJANGO_DEBUG', '') != 'True'
