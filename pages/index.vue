@@ -34,8 +34,9 @@
       <el-input placeholder="Search..." v-on:keyup.enter="applyFilters" v-model="search" />
       <el-button @click="applyFilters" type="primary">Apply</el-button>
     </div>
-    <div v-if="filteredJobs.length != 0" class="jobs">
-      <Job v-for="job in filteredJobs" :key="job.id" :title="job.title" applicationLink="/apply" :company="job.company" :location="job.location" :languages="job.languages" :description="job.description" />
+    <div v-if="loadedJobs.length != 0" class="jobs">
+      <Job v-for="job in loadedJobs" :key="job.id" :title="job.title" applicationLink="/apply" :company="job.company" :location="job.location" :languages="job.languages" :description="job.description" />
+      <el-button v-if="loadedJobs.length < filteredJobs.length" class="load-button" @click="loadJobs" type="primary">Load more</el-button>
     </div>
     <div v-else class="no-jobs">
       <p>Sorry, no jobs found.</p>
@@ -56,6 +57,8 @@ export default {
     return {
       jobs: [],
       filteredJobs: [],
+      loadIndex: 1, // inital 25 already loaded, first load call must be 2 * 25 
+      loadedJobs: [],
       selectedLanguages: [],
       search: '',
       images: ['benjamin-davies-Oja2ty_9ZLM-unsplash.jpg', 'chris-karidis-nnzkZNYWHaU-unsplash.jpg', 'stefan-widua-iPOZf3tQfHA-unsplash.jpg']
@@ -104,10 +107,14 @@ export default {
         });
       });
       return result;
+    },
+    loadJobs() {
+      this.loadIndex++;
+      this.loadedJobs = this.filteredJobs.slice(0, this.loadIndex * 10)
     }
   },
   mounted() {
-    axios.get('http://127.0.0.1:8000/api/jobs/').then(response => (this.jobs = response.data, this.filteredJobs = response.data));
+    axios.get('http://127.0.0.1:8000/api/jobs/').then(response => (this.jobs = response.data, this.filteredJobs = response.data, this.loadedJobs = response.data.slice(0, 25)));
   }
 }
 </script>
@@ -166,6 +173,11 @@ export default {
         opacity: 1;
       }
     }
+  }
+  .el-button.load-button {
+    display: block;
+    margin: 2rem auto 1rem auto;
+    width: 12rem;
   }
 }
 .no-jobs {
