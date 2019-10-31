@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     'api',
     'jobs',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -130,10 +132,10 @@ STATIC_URL = '/static/'
 CSRF_COOKIE_NAME = "XCSRF-TOKEN"
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-""" CORS_ORIGIN_WHITELIST = [
+CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-] """
+]
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',

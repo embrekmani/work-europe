@@ -7,15 +7,10 @@ WORKDIR /app
 COPY package.json ./
 COPY yarn.lock ./
 
-# install project dependencies leaving out dev dependencies
-RUN yarn add --production
+RUN yarn install
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
 # build app for production with minification
-RUN nuxt build
-RUN nuxt start
-
-EXPOSE 8080
-CMD [ "http-server", "dist" ]
+RUN yarn build
