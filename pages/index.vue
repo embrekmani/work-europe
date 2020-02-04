@@ -35,7 +35,7 @@
       <el-button @click="applyFilters" type="primary">Apply</el-button>
     </div>
     <div v-if="loadedJobs.length != 0" class="jobs">
-      <Job v-for="job in loadedJobs" :key="job.id" :title="job.title" applicationLink="/apply" :company="job.company" :location="job.location" :languages="job.languages" :description="job.description" />
+      <Job v-for="job in loadedJobs" :key="job.id" :title="job.title" :applicationLink="job.applicationLink" :company="job.company" :location="job.location" :languages="job.languages" :description="job.description" />
       <el-button v-if="loadedJobs.length < filteredJobs.length" class="load-button" @click="loadJobs" type="primary">Load more</el-button>
     </div>
     <div v-else class="no-jobs">
@@ -46,8 +46,9 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Job from '~/components/Job.vue';
+import db from '~/server/firebaseInit'
+import Job from '~/components/Job.vue'
+
 
 export default {
   components: {
@@ -113,9 +114,24 @@ export default {
       this.loadedJobs = this.filteredJobs.slice(0, this.loadIndex * 10)
     }
   },
-  mounted() {
-    axios.get('http://127.0.0.1:8000/api/jobs/').then(response => (this.jobs = response.data, this.filteredJobs = response.data, this.loadedJobs = response.data.slice(0, 25)));
-  }
+  created() {
+    db.collection('jobs').get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const data = {
+          id: doc.id,
+          title: doc.data().title,
+          location: doc.data().location,
+          company: doc.data().company,
+          applicationLink: doc.data().applicationLink,
+          languages: doc.data().languages,
+          description: doc.data().description,
+        }
+        this.jobs.push(data);
+        this.filteredJobs.push(data);
+        this.loadJobs();
+      })
+    })
+  },
 }
 </script>
 

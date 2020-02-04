@@ -41,11 +41,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-axios.defaults.xsrfCookieName = "XCSRF-TOKEN";
-axios.defaults.withCredentials = true
+import db from '~/server/firebaseInit'
 
 export default {
   data() {
@@ -84,7 +80,7 @@ export default {
         this.errors.push('Description cannot exceed 1000 characters.')
       }
       else {
-        axios.post('http://127.0.0.1:8000/api/jobs/', {
+        db.collection('jobs').add({
           title: this.form.title,
           location: this.form.location,
           company: this.form.company,
@@ -92,13 +88,8 @@ export default {
           languages: this.form.languages,
           description: this.form.description,
         })
-        .then(function (response) {
-          console.log(response)
-          window.location.href = '/';
-        })
-        .catch(function (error) {
-          console.log(error)
-        });
+        .then(docRef => window.location = '/')
+        .catch(error => console.log(error))
       }
 
       if (this.errors) {
