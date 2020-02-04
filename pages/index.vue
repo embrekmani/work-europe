@@ -62,7 +62,7 @@ export default {
       loadedJobs: [],
       selectedLanguages: [],
       search: '',
-      images: ['benjamin-davies-Oja2ty_9ZLM-unsplash.jpg', 'chris-karidis-nnzkZNYWHaU-unsplash.jpg', 'stefan-widua-iPOZf3tQfHA-unsplash.jpg']
+      images: ['benjamin-davies-Oja2ty_9ZLM-unsplash_x776.jpg', 'chris-karidis-nnzkZNYWHaU-unsplash_x776.jpg', 'stefan-widua-iPOZf3tQfHA-unsplash_x776.jpg']
     }
   },
   methods: {
