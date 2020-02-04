@@ -76,8 +76,8 @@ export default {
       else if (this.form.applicationLink.length > 1000) {
         this.errors.push('Application link cannot exceed 140 characters.')
       }
-      else if (this.form.description.length > 1000) {
-        this.errors.push('Description cannot exceed 1000 characters.')
+      else if (this.form.description.length > 10000) {
+        this.errors.push('Description cannot exceed 10000 characters.')
       }
       else {
         db.collection('jobs').add({
