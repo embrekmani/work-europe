@@ -89,6 +89,7 @@ export default {
         transition: all .3s ease;
         transform: scaleY(0);
         transform-origin: top;
+        max-width: 860px; // 900px - 40px padding
         .card-body {
             transition: all .3s ease;
             font-size: 0;
@@ -99,6 +100,9 @@ export default {
                 opacity: 0;
                 transition: opacity .3s ease;
                 transition-delay: .3s;
+            }
+            code {
+                white-space: break-spaces;
             }
         }
     }
